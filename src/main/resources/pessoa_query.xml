@@ -2,7 +2,7 @@
 
 <queries>
 
-    <query name="INSERT">
+    <query nome="CREATE">
         <![CDATA[
             INSERT INTO TB_PESSOA (CATEGORIA, NOME) VALUES (?, ?);
         ]]>
