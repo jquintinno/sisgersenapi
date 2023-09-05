@@ -8,4 +8,10 @@
         ]]>
     </query>
 
+    <query nome="FINDALL">
+        <![CDATA[
+            SELECT * FROM TB_PESSOA;
+        ]]>
+    </query>
+
 </queries>

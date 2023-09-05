@@ -1,4 +1,4 @@
-package br.com.quintinno.sisgersenapi.sql;
+package br.com.quintinno.sisgersenapi.configuration;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.stereotype.Component;
@@ -14,19 +14,20 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Component
-public class PessoaDAO {
+public class QueryXMLComponent {
 
-    private final Map<String, String> queries;
+    public static final String CLASSPATH_PESSOA_QUERY_XML = "classpath:pessoa_query.xml";
+    private final Map<String, String> querieList;
 
-    public PessoaDAO() throws Exception {
-        this.queries = new HashMap<>();
+    public QueryXMLComponent() throws Exception {
+        this.querieList = new HashMap<>();
         getQuery();
     }
 
     private void getQuery() throws Exception {
         try {
             PathMatchingResourcePatternResolver pathMatchingResourcePatternResolver = new PathMatchingResourcePatternResolver();
-            Resource resource = pathMatchingResourcePatternResolver.getResource("classpath:pessoa_query.xml");
+            Resource resource = pathMatchingResourcePatternResolver.getResource(CLASSPATH_PESSOA_QUERY_XML);
 
             DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
@@ -38,7 +39,7 @@ public class PessoaDAO {
                 Node queryNode = queryNodes.item(i);
                 if (queryNode.getNodeType() == Node.ELEMENT_NODE) {
                     Element queryElement = (Element) queryNode;
-                    queries.put(queryElement.getAttribute("nome"), queryElement.getTextContent().trim());
+                    querieList.put(queryElement.getAttribute("nome"), queryElement.getTextContent().trim());
                 }
             }
         } catch (IOException e) {
@@ -47,7 +48,7 @@ public class PessoaDAO {
     }
 
     public String recuperarQuery(String name) {
-        return queries.get(name);
+        return querieList.get(name);
     }
 
 }

@@ -5,6 +5,8 @@ import br.com.quintinno.sisgersenapi.repository.PessoaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PessoaService {
 
@@ -13,6 +15,10 @@ public class PessoaService {
 
     public PessoaDomain create(PessoaDomain pessoaDomain) {
         return pessoaRepository.create(pessoaDomain);
+    }
+
+    public List<PessoaDomain> findAll() {
+        return pessoaRepository.findAll();
     }
 
 }
