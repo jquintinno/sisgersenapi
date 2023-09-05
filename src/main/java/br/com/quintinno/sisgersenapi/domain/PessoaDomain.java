@@ -19,6 +19,10 @@ public class PessoaDomain {
 
     public PessoaDomain() { }
 
+    public PessoaDomain(Long codigo) {
+        this.codigo = codigo;
+    }
+
     public Long getCodigo() {
         return codigo;
     }

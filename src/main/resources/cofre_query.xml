@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<queries>
+
+    <query nome="COFRE_CREATE">
+        <![CDATA[
+            INSERT INTO TB_COFRE (ID_PESSOA, CATEGORIA, TITULO, IDENTIFICADOR, CHAVE, DATA_ATUALIZACAO, DATA_CADASTRO, DATA_VENCIMENTO) VALUES (
+                ?, ?, ?, ?, ?, now(), now(), now()
+            );
+        ]]>
+    </query>
+
+    <query nome="COFRE_FINDALL">
+        <![CDATA[
+            SELECT * FROM TB_COFRE;
+        ]]>
+    </query>
+
+</queries>

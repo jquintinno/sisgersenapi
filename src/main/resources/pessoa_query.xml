@@ -14,4 +14,10 @@
         ]]>
     </query>
 
+    <query nome="PESSOA_FINDONE_CODIGO">
+        <![CDATA[
+            SELECT * FROM TB_PESSOA WHERE CODIGO = ?;
+        ]]>
+    </query>
+
 </queries>

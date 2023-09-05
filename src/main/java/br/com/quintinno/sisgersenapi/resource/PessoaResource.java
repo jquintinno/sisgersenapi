@@ -24,4 +24,9 @@ public class PessoaResource {
         return pessoaService.findAll();
     }
 
+    @GetMapping("/v1/{codigo}")
+    public PessoaDomain findOne(@PathVariable("codigo") Long codigo) {
+        return pessoaService.findOne(codigo);
+    }
+
 }

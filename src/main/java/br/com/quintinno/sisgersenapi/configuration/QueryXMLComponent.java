@@ -17,17 +17,21 @@ import java.util.Map;
 public class QueryXMLComponent {
 
     public static final String CLASSPATH_PESSOA_QUERY_XML = "classpath:pessoa_query.xml";
+
+    public static final String CLASSPATH_COFRE_QUERY_XML = "classpath:cofre_query.xml";
+
     private final Map<String, String> querieList;
 
     public QueryXMLComponent() throws Exception {
         this.querieList = new HashMap<>();
-        getQuery();
+        getQuery(CLASSPATH_PESSOA_QUERY_XML);
+        getQuery(CLASSPATH_COFRE_QUERY_XML);
     }
 
-    private void getQuery() throws Exception {
+    private void getQuery(String classpath) throws Exception {
         try {
             PathMatchingResourcePatternResolver pathMatchingResourcePatternResolver = new PathMatchingResourcePatternResolver();
-            Resource resource = pathMatchingResourcePatternResolver.getResource(CLASSPATH_PESSOA_QUERY_XML);
+            Resource resource = pathMatchingResourcePatternResolver.getResource(classpath);
             DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
             Document document = documentBuilder.parse(resource.getInputStream());
