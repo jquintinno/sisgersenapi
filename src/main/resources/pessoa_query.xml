@@ -2,13 +2,13 @@
 
 <queries>
 
-    <query nome="CREATE">
+    <query nome="PESSOA_CREATE">
         <![CDATA[
             INSERT INTO TB_PESSOA (CATEGORIA, NOME) VALUES (?, ?);
         ]]>
     </query>
 
-    <query nome="FINDALL">
+    <query nome="PESSOA_FINDALL">
         <![CDATA[
             SELECT * FROM TB_PESSOA;
         ]]>

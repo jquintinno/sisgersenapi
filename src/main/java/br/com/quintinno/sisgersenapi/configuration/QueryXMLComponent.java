@@ -28,13 +28,10 @@ public class QueryXMLComponent {
         try {
             PathMatchingResourcePatternResolver pathMatchingResourcePatternResolver = new PathMatchingResourcePatternResolver();
             Resource resource = pathMatchingResourcePatternResolver.getResource(CLASSPATH_PESSOA_QUERY_XML);
-
             DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
             Document document = documentBuilder.parse(resource.getInputStream());
-
             NodeList queryNodes = document.getElementsByTagName("query");
-
             for (int i = 0; i < queryNodes.getLength(); i++) {
                 Node queryNode = queryNodes.item(i);
                 if (queryNode.getNodeType() == Node.ELEMENT_NODE) {
