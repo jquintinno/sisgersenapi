@@ -1,11 +1,10 @@
 package br.com.quintinno.sisgersenapi.repository;
 
-import br.com.quintinno.sisgersenapi.configuration.CriptografiaConfiguration;
+import br.com.quintinno.sisgersenapi.utility.CriptografiaUtility;
 import br.com.quintinno.sisgersenapi.configuration.QueryXMLComponent;
 import br.com.quintinno.sisgersenapi.domain.CofreDomain;
 import br.com.quintinno.sisgersenapi.domain.PessoaDomain;
 import br.com.quintinno.sisgersenapi.mapper.CofreRowMapper;
-import br.com.quintinno.sisgersenapi.mapper.PessoaRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
@@ -33,7 +32,7 @@ public class CofreRepository {
         this.jdbcTemplate.update(query,
                     cofreDomain.getPessoaGerenciadaDomain().getCodigo(), cofreDomain.getPessoaResponsavelDomain().getCodigo(),
                     cofreDomain.getCategoria(), cofreDomain.getTitulo(),
-                    cofreDomain.getIdentificador(), CriptografiaConfiguration.criptografar(cofreDomain.getChave()));
+                    cofreDomain.getIdentificador(), CriptografiaUtility.criptografar(cofreDomain.getChave()));
         return cofreDomain;
     }
 
@@ -59,7 +58,7 @@ public class CofreRepository {
     }
 
     public CofreDomain findOne(String chave) {
-        CofreDomain cofreDomain = this.jdbcTemplate.queryForObject(queryXMLComponent.recuperarQuery(COFRE_FINDONE), new CofreRowMapper(), CriptografiaConfiguration.criptografar(chave));
+        CofreDomain cofreDomain = this.jdbcTemplate.queryForObject(queryXMLComponent.recuperarQuery(COFRE_FINDONE), new CofreRowMapper(), CriptografiaUtility.criptografar(chave));
         if (cofreDomain == null) {
             return null;
         }

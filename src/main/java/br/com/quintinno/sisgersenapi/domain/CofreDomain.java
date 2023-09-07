@@ -24,7 +24,7 @@ public class CofreDomain {
     @JoinColumn(name = "ID_PESSOA_RESPONSAVEL", nullable = false)
     private PessoaDomain pessoaResponsavelDomain;
 
-    @Column(name = "TITULO", nullable = false)
+    @Column(name = "TITULO", unique = true, nullable = false)
     private String titulo;
 
     @Column(name = "IDENTIFICADOR", nullable = false)
