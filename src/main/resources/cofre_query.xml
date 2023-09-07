@@ -16,7 +16,13 @@
         ]]>
     </query>
 
-    <query nome="COFRE_FINDONE">
+    <query nome="COFRE_FINDONE_CODIGO">
+        <![CDATA[
+            SELECT * FROM TB_COFRE WHERE CODIGO = ?;
+        ]]>
+    </query>
+
+    <query nome="COFRE_FINDONE_CHAVE">
         <![CDATA[
             SELECT * FROM TB_COFRE WHERE CHAVE = ?;
         ]]>

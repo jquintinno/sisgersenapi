@@ -2,7 +2,10 @@ package br.com.quintinno.sisgersenapi.domain;
 
 import jakarta.persistence.*;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(schema = "public", name = "TB_COFRE")
@@ -34,15 +37,30 @@ public class CofreDomain {
     private String chave;
 
     @Column(name = "DATA_CADASTRO", nullable = false)
-    private LocalDate dataCadastro;
+    private LocalDateTime dataCadastro;
 
     @Column(name = "DATA_ATUALIZACAO", nullable = false)
-    private LocalDate dataAtualizacao;
+    private LocalDateTime dataAtualizacao;
 
     @Column(name = "DATA_VENCIMENTO", nullable = false)
-    private LocalDate dataVencimento;
+    private LocalDateTime dataVencimento;
 
     public CofreDomain() { }
+
+    public static CofreDomain getCofreDomain(ResultSet resultSet) throws SQLException {
+        CofreDomain cofreDomain = new CofreDomain();
+        cofreDomain.setCodigo(resultSet.getLong("CODIGO"));
+        cofreDomain.setPessoaGerenciadaDomain(new PessoaDomain(resultSet.getLong("ID_PESSOA_GERENCIADA")));
+        cofreDomain.setPessoaResponsavelDomain(new PessoaDomain(resultSet.getLong("ID_PESSOA_RESPONSAVEL")));
+        cofreDomain.setCategoria(resultSet.getString("CATEGORIA"));
+        cofreDomain.setIdentificador(resultSet.getString("IDENTIFICADOR"));
+        cofreDomain.setChave(resultSet.getString("CHAVE"));
+        cofreDomain.setTitulo(resultSet.getString("TITULO"));
+        cofreDomain.setDataCadastro(resultSet.getDate("DATA_CADASTRO").toLocalDate().atStartOfDay());
+        cofreDomain.setDataAtualizacao(resultSet.getDate("DATA_ATUALIZACAO").toLocalDate().atStartOfDay());
+        cofreDomain.setDataVencimento(resultSet.getDate("DATA_VENCIMENTO").toLocalDate().atStartOfDay());
+        return cofreDomain;
+    }
 
     public Long getCodigo() {
         return codigo;
@@ -100,27 +118,27 @@ public class CofreDomain {
         this.identificador = identificador;
     }
 
-    public LocalDate getDataCadastro() {
+    public LocalDateTime getDataCadastro() {
         return dataCadastro;
     }
 
-    public void setDataCadastro(LocalDate dataCadastro) {
+    public void setDataCadastro(LocalDateTime dataCadastro) {
         this.dataCadastro = dataCadastro;
     }
 
-    public LocalDate getDataAtualizacao() {
+    public LocalDateTime getDataAtualizacao() {
         return dataAtualizacao;
     }
 
-    public void setDataAtualizacao(LocalDate dataAtualizacao) {
+    public void setDataAtualizacao(LocalDateTime dataAtualizacao) {
         this.dataAtualizacao = dataAtualizacao;
     }
 
-    public LocalDate getDataVencimento() {
+    public LocalDateTime getDataVencimento() {
         return dataVencimento;
     }
 
-    public void setDataVencimento(LocalDate dataVencimento) {
+    public void setDataVencimento(LocalDateTime dataVencimento) {
         this.dataVencimento = dataVencimento;
     }
 

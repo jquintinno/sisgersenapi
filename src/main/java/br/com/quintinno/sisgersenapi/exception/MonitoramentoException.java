@@ -30,5 +30,13 @@ public class MonitoramentoException {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exceptionResponseDTO);
     }
 
+    @ExceptionHandler(IllegalStateException.class)
+    public ResponseEntity<ExceptionResponseDTO> illegalStateException(
+            IllegalStateException illegalStateException, HttpServletRequest httpServletRequest) {
+        ExceptionResponseDTO exceptionResponseDTO = new ExceptionResponseDTO(
+                HttpStatus.NOT_IMPLEMENTED.name(), ConstantesUtility.ERRO_NO_SERVIDOR, DateUtility.gerarDataFormatada(DateUtility.FORMAT0001));
+        return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(exceptionResponseDTO);
+    }
+
 }
 

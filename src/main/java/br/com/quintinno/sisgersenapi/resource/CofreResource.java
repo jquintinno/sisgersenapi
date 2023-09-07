@@ -24,6 +24,11 @@ public class CofreResource {
         return cofreService.findAll();
     }
 
+    @GetMapping("/v1/{codigo}")
+    public CofreDomain findOne(@PathVariable("codigo") Long codigo) {
+        return this.cofreService.findOne(codigo);
+    }
+
     @GetMapping("/v1/filtro/{chave}")
     public CofreDomain findOne(@PathVariable("chave") String chave) {
         return this.cofreService.findOne(chave);

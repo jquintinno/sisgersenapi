@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,10 +27,12 @@ public class CofreRepository {
 
     public static final String COFRE_FINDALL = "COFRE_FINDALL";
 
-    public static final String COFRE_FINDONE = "COFRE_FINDONE";
+    public static final String COFRE_FINDONE_CHAVE = "COFRE_FINDONE_CHAVE";
+
+    public static final String COFRE_FINDONE_CODIGO = "COFRE_FINDONE_CODIGO";
 
     public CofreDomain create(CofreDomain cofreDomain) {
-        String query = queryXMLComponent.recuperarQuery(COFRE_CREATE);
+        String query = this.queryXMLComponent.recuperarQuery(COFRE_CREATE);
         this.jdbcTemplate.update(query,
                     cofreDomain.getPessoaGerenciadaDomain().getCodigo(), cofreDomain.getPessoaResponsavelDomain().getCodigo(),
                     cofreDomain.getCategoria(), cofreDomain.getTitulo(),
@@ -38,27 +42,27 @@ public class CofreRepository {
 
     public List<CofreDomain> findAll() {
         List<CofreDomain> cofreDomainList = new ArrayList<>();
-        String query = queryXMLComponent.recuperarQuery(COFRE_FINDALL);
-        jdbcTemplate.query(query, (resultSet, rowNum) -> {
-            CofreDomain cofreDomain = new CofreDomain();
-                cofreDomain.setCodigo(resultSet.getLong("CODIGO"));
-                cofreDomain.setPessoaGerenciadaDomain(new PessoaDomain(resultSet.getLong("ID_PESSOA_GERENCIADA")));
-                cofreDomain.setPessoaResponsavelDomain(new PessoaDomain(resultSet.getLong("ID_PESSOA_RESPONSAVEL")));
-                cofreDomain.setCategoria(resultSet.getString("CATEGORIA"));
-                cofreDomain.setIdentificador(resultSet.getString("IDENTIFICADOR"));
-                cofreDomain.setChave(resultSet.getString("CHAVE"));
-                cofreDomain.setTitulo(resultSet.getString("TITULO"));
-                cofreDomain.setDataCadastro(resultSet.getDate("DATA_CADASTRO").toLocalDate());
-                cofreDomain.setDataAtualizacao(resultSet.getDate("DATA_ATUALIZACAO").toLocalDate());
-                cofreDomain.setDataVencimento(resultSet.getDate("DATA_VENCIMENTO").toLocalDate());
+        String query = this.queryXMLComponent.recuperarQuery(COFRE_FINDALL);
+        this.jdbcTemplate.query(query, (resultSet, rowNum) -> {
+            CofreDomain cofreDomain = CofreDomain.getCofreDomain(resultSet);
             cofreDomainList.add(cofreDomain);
             return cofreDomain;
         });
         return cofreDomainList;
     }
 
+    public CofreDomain findOne(Long codigo) {
+        CofreDomain cofreDomain = this.jdbcTemplate.queryForObject(
+                queryXMLComponent.recuperarQuery(COFRE_FINDONE_CODIGO), new CofreRowMapper(), codigo);
+        if (cofreDomain == null) {
+            return null;
+        }
+        return cofreDomain;
+    }
+
     public CofreDomain findOne(String chave) {
-        CofreDomain cofreDomain = this.jdbcTemplate.queryForObject(queryXMLComponent.recuperarQuery(COFRE_FINDONE), new CofreRowMapper(), CriptografiaUtility.criptografar(chave));
+        CofreDomain cofreDomain = this.jdbcTemplate.queryForObject(
+                queryXMLComponent.recuperarQuery(COFRE_FINDONE_CHAVE), new CofreRowMapper(), CriptografiaUtility.criptografar(chave));
         if (cofreDomain == null) {
             return null;
         }
