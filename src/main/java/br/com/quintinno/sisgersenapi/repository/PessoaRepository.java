@@ -21,7 +21,6 @@ public class PessoaRepository {
 
     public static final String PESSOA_CREATE = "PESSOA_CREATE";
     public static final String PESSOA_FINDALL = "PESSOA_FINDALL";
-
     public static final String PESSOA_FINDONE_CODIGO = "PESSOA_FINDONE_CODIGO";
 
     public PessoaDomain create(PessoaDomain pessoaDomain) {

@@ -4,8 +4,8 @@
 
     <query nome="COFRE_CREATE">
         <![CDATA[
-            INSERT INTO TB_COFRE (ID_PESSOA, CATEGORIA, TITULO, IDENTIFICADOR, CHAVE, DATA_ATUALIZACAO, DATA_CADASTRO, DATA_VENCIMENTO) VALUES (
-                ?, ?, ?, ?, ?, now(), now(), now()
+            INSERT INTO TB_COFRE (ID_PESSOA_GERENCIADA, ID_PESSOA_RESPONSAVEL, CATEGORIA, TITULO, IDENTIFICADOR, CHAVE, DATA_ATUALIZACAO, DATA_CADASTRO, DATA_VENCIMENTO) VALUES (
+                ?, ?, ?, ?, ?, ?, NOW(), NOW(), NOW()
             );
         ]]>
     </query>
@@ -13,6 +13,12 @@
     <query nome="COFRE_FINDALL">
         <![CDATA[
             SELECT * FROM TB_COFRE;
+        ]]>
+    </query>
+
+    <query nome="COFRE_FINDONE">
+        <![CDATA[
+            SELECT * FROM TB_COFRE WHERE CHAVE = ?;
         ]]>
     </query>
 

@@ -22,4 +22,8 @@ public class CofreService {
         return cofreRepository.findAll();
     }
 
+    public CofreDomain findOne(String chave) {
+        return cofreRepository.findOne(chave);
+    }
+
 }

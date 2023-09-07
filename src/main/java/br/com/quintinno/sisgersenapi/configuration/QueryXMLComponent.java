@@ -24,8 +24,8 @@ public class QueryXMLComponent {
 
     public QueryXMLComponent() throws Exception {
         this.querieList = new HashMap<>();
-        getQuery(CLASSPATH_PESSOA_QUERY_XML);
-        getQuery(CLASSPATH_COFRE_QUERY_XML);
+        this.getQuery(CLASSPATH_PESSOA_QUERY_XML);
+        this.getQuery(CLASSPATH_COFRE_QUERY_XML);
     }
 
     private void getQuery(String classpath) throws Exception {

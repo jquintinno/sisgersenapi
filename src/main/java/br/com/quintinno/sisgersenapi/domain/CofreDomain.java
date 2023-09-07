@@ -17,8 +17,12 @@ public class CofreDomain {
     private String categoria;
 
     @ManyToOne
-    @JoinColumn(name = "ID_PESSOA", nullable = false)
-    private PessoaDomain pessoaDomain;
+    @JoinColumn(name = "ID_PESSOA_GERENCIADA", nullable = false)
+    private PessoaDomain pessoaGerenciadaDomain;
+
+    @ManyToOne
+    @JoinColumn(name = "ID_PESSOA_RESPONSAVEL", nullable = false)
+    private PessoaDomain pessoaResponsavelDomain;
 
     @Column(name = "TITULO", nullable = false)
     private String titulo;
@@ -56,12 +60,20 @@ public class CofreDomain {
         this.categoria = categoria;
     }
 
-    public PessoaDomain getPessoaDomain() {
-        return pessoaDomain;
+    public PessoaDomain getPessoaGerenciadaDomain() {
+        return pessoaGerenciadaDomain;
     }
 
-    public void setPessoaDomain(PessoaDomain pessoaDomain) {
-        this.pessoaDomain = pessoaDomain;
+    public void setPessoaGerenciadaDomain(PessoaDomain pessoaGerenciadaDomain) {
+        this.pessoaGerenciadaDomain = pessoaGerenciadaDomain;
+    }
+
+    public PessoaDomain getPessoaResponsavelDomain() {
+        return pessoaResponsavelDomain;
+    }
+
+    public void setPessoaResponsavelDomain(PessoaDomain pessoaResponsavelDomain) {
+        this.pessoaResponsavelDomain = pessoaResponsavelDomain;
     }
 
     public String getTitulo() {

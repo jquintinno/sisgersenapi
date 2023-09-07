@@ -1,8 +1,11 @@
 package br.com.quintinno.sisgersenapi.repository;
 
+import br.com.quintinno.sisgersenapi.configuration.CriptografiaConfiguration;
 import br.com.quintinno.sisgersenapi.configuration.QueryXMLComponent;
 import br.com.quintinno.sisgersenapi.domain.CofreDomain;
 import br.com.quintinno.sisgersenapi.domain.PessoaDomain;
+import br.com.quintinno.sisgersenapi.mapper.CofreRowMapper;
+import br.com.quintinno.sisgersenapi.mapper.PessoaRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
@@ -23,11 +26,14 @@ public class CofreRepository {
 
     public static final String COFRE_FINDALL = "COFRE_FINDALL";
 
+    public static final String COFRE_FINDONE = "COFRE_FINDONE";
+
     public CofreDomain create(CofreDomain cofreDomain) {
         String query = queryXMLComponent.recuperarQuery(COFRE_CREATE);
         this.jdbcTemplate.update(query,
-                    cofreDomain.getPessoaDomain().getCodigo(), cofreDomain.getCategoria(), cofreDomain.getTitulo(),
-                    cofreDomain.getIdentificador(), cofreDomain.getChave());
+                    cofreDomain.getPessoaGerenciadaDomain().getCodigo(), cofreDomain.getPessoaResponsavelDomain().getCodigo(),
+                    cofreDomain.getCategoria(), cofreDomain.getTitulo(),
+                    cofreDomain.getIdentificador(), CriptografiaConfiguration.criptografar(cofreDomain.getChave()));
         return cofreDomain;
     }
 
@@ -37,7 +43,8 @@ public class CofreRepository {
         jdbcTemplate.query(query, (resultSet, rowNum) -> {
             CofreDomain cofreDomain = new CofreDomain();
                 cofreDomain.setCodigo(resultSet.getLong("CODIGO"));
-                cofreDomain.setPessoaDomain(new PessoaDomain(resultSet.getLong("ID_PESSOA")));
+                cofreDomain.setPessoaGerenciadaDomain(new PessoaDomain(resultSet.getLong("ID_PESSOA_GERENCIADA")));
+                cofreDomain.setPessoaResponsavelDomain(new PessoaDomain(resultSet.getLong("ID_PESSOA_RESPONSAVEL")));
                 cofreDomain.setCategoria(resultSet.getString("CATEGORIA"));
                 cofreDomain.setIdentificador(resultSet.getString("IDENTIFICADOR"));
                 cofreDomain.setChave(resultSet.getString("CHAVE"));
@@ -49,6 +56,14 @@ public class CofreRepository {
             return cofreDomain;
         });
         return cofreDomainList;
+    }
+
+    public CofreDomain findOne(String chave) {
+        CofreDomain cofreDomain = this.jdbcTemplate.queryForObject(queryXMLComponent.recuperarQuery(COFRE_FINDONE), new CofreRowMapper(), CriptografiaConfiguration.criptografar(chave));
+        if (cofreDomain == null) {
+            return null;
+        }
+        return cofreDomain;
     }
 
 }
