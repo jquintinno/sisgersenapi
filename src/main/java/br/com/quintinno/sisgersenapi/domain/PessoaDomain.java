@@ -2,14 +2,18 @@ package br.com.quintinno.sisgersenapi.domain;
 
 import jakarta.persistence.*;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.UUID;
+
 @Entity
 @Table(schema = "public", name = "TB_PESSOA")
 public class PessoaDomain {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "CODIGO", nullable = false)
-    private Long codigo;
+    private UUID codigo;
 
     @Column(name = "CATEGORIA", nullable = false)
     private String categoria;
@@ -19,15 +23,23 @@ public class PessoaDomain {
 
     public PessoaDomain() { }
 
-    public PessoaDomain(Long codigo) {
+    public PessoaDomain(UUID codigo) {
         this.codigo = codigo;
     }
 
-    public Long getCodigo() {
+    public static PessoaDomain getPessoaDomain(ResultSet resultSet) throws SQLException {
+        PessoaDomain pessoaDomain = new PessoaDomain();
+            pessoaDomain.setCodigo(UUID.fromString(resultSet.getString("CODIGO")));
+            pessoaDomain.setCategoria(resultSet.getString("CATEGORIA"));
+            pessoaDomain.setNome(resultSet.getString("NOME"));
+        return pessoaDomain;
+    }
+
+    public UUID getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(Long codigo) {
+    public void setCodigo(UUID codigo) {
         this.codigo = codigo;
     }
 

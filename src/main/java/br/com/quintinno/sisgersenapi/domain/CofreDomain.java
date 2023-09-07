@@ -4,8 +4,8 @@ import jakarta.persistence.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Table(schema = "public", name = "TB_COFRE")
@@ -50,8 +50,8 @@ public class CofreDomain {
     public static CofreDomain getCofreDomain(ResultSet resultSet) throws SQLException {
         CofreDomain cofreDomain = new CofreDomain();
         cofreDomain.setCodigo(resultSet.getLong("CODIGO"));
-        cofreDomain.setPessoaGerenciadaDomain(new PessoaDomain(resultSet.getLong("ID_PESSOA_GERENCIADA")));
-        cofreDomain.setPessoaResponsavelDomain(new PessoaDomain(resultSet.getLong("ID_PESSOA_RESPONSAVEL")));
+        cofreDomain.setPessoaGerenciadaDomain(new PessoaDomain(UUID.fromString(resultSet.getString("ID_PESSOA_GERENCIADA"))));
+        cofreDomain.setPessoaResponsavelDomain(new PessoaDomain(UUID.fromString(resultSet.getString("ID_PESSOA_RESPONSAVEL"))));
         cofreDomain.setCategoria(resultSet.getString("CATEGORIA"));
         cofreDomain.setIdentificador(resultSet.getString("IDENTIFICADOR"));
         cofreDomain.setChave(resultSet.getString("CHAVE"));

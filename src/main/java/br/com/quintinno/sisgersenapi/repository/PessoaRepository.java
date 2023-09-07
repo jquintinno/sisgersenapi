@@ -7,8 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Component
 public class PessoaRepository {
@@ -33,10 +36,7 @@ public class PessoaRepository {
         List<PessoaDomain> pessoaDomainList = new ArrayList<>();
         String query = queryXMLComponent.recuperarQuery(PESSOA_FINDALL);
         jdbcTemplate.query(query, (resultSet, rowNum) -> {
-            PessoaDomain pessoaDomain = new PessoaDomain();
-                pessoaDomain.setCodigo(resultSet.getLong("CODIGO"));
-                pessoaDomain.setCategoria(resultSet.getString("CATEGORIA"));
-                pessoaDomain.setNome(resultSet.getString("NOME"));
+            PessoaDomain pessoaDomain = PessoaDomain.getPessoaDomain(resultSet);
             pessoaDomainList.add(pessoaDomain);
             return pessoaDomain;
         });

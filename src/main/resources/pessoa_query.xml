@@ -4,7 +4,7 @@
 
     <query nome="PESSOA_CREATE">
         <![CDATA[
-            INSERT INTO TB_PESSOA (CATEGORIA, NOME) VALUES (?, ?);
+            INSERT INTO TB_PESSOA (CODIGO, CATEGORIA, NOME) VALUES (UUID_GENERATE_V4(), ?, ?);
         ]]>
     </query>
 

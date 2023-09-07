@@ -5,16 +5,13 @@ import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.UUID;
 
 public class PessoaRowMapper implements RowMapper<PessoaDomain> {
 
     @Override
     public PessoaDomain mapRow(ResultSet resultSet, int rowNum) throws SQLException {
-        PessoaDomain pessoaDomain = new PessoaDomain();
-            pessoaDomain.setCodigo(resultSet.getLong("CODIGO"));
-            pessoaDomain.setCategoria(resultSet.getString("CATEGORIA"));
-            pessoaDomain.setNome(resultSet.getString("NOME"));
-        return pessoaDomain;
+        return PessoaDomain.getPessoaDomain(resultSet);
     }
 
 }
